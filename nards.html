@@ -7,8 +7,6 @@
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1819;--ink:#e3eeec;--mut:#8aa3a6;--l:#a9c2ba;--d:#3f6a63;--frame:#050b0c;--bp:#0b1116}}
 :root[data-theme="dark"]{--bg:#0f1819;--ink:#e3eeec;--mut:#8aa3a6;--l:#a9c2ba;--d:#3f6a63;--frame:#050b0c;--bp:#0b1116}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Spectral,Georgia,serif}
-/* КЛАСС ДЛЯ ФИКСАЦИИ ТОЛЬКО ВО ВРЕМЯ ИГРЫ */
-body.playing{overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
 [hidden]{display:none!important}
 .app{display:flex;flex-direction:column;align-items:center;gap:18px;padding:18px 10px}
 .frame{padding:clamp(6px,1.6vw,14px);background:var(--frame);border-radius:6px;box-shadow:0 22px 44px -20px rgba(5,20,20,.6)}
@@ -211,14 +209,12 @@ $('#undo').onclick=()=>{
   }
 };
 
-// СНИМАЕМ БЛОКИРОВКУ ПРИ ВОЗВРАТЕ В МЕНЮ
-$('#tomenu').onclick=()=>{gid++;busy=false;$('#game').hidden=true;$('#menu').hidden=false;document.body.classList.remove('playing');};
+$('#tomenu').onclick=()=>{gid++;busy=false;$('#game').hidden=true;$('#menu').hidden=false;};
 const MS={mode:'2',v:'short',side:'w',lvl:'0'},INFO={short:'Короткие нарды: по 15 шашек, одинокую шашку можно сбить, она уходит на бар и входит заново. Выигрывает тот, кто первым вынес все шашки.',long:'Длинные нарды: все шашки идут с «головы» по кругу, бить нельзя. С головы берётся одна шашка за ход, нельзя строить шесть подряд, пока у соперника нет шашки впереди.'};
 function info(){$('#ruleinfo').textContent=INFO[MS.v]}
 document.querySelectorAll('.opts').forEach(g=>g.onclick=e=>{const b=e.target.closest('.opt');if(!b)return;
  g.querySelectorAll('.opt').forEach(x=>x.classList.toggle('on',x===b));MS[g.dataset.k]=b.dataset.v;$('#vsai').hidden=MS.mode!=='1';info()});
-// ВКЛЮЧАЕМ БЛОКИРОВКУ ПРИ СТАРТЕ ИГРЫ
 $('#play').onclick=()=>{mode=+MS.mode;lvl=+MS.lvl;V=MS.v;hu=MS.side==='r'?(Math.random()<.5?'w':'b'):MS.side;flip=mode===1&&hu==='b';sc={w:0,b:0};starter='w';
- $('#menu').hidden=true;$('#game').hidden=false;document.body.classList.add('playing');tryInterstitial(begin)};
+ $('#menu').hidden=true;$('#game').hidden=false;tryInterstitial(begin)};
 $('#logo').innerHTML=dieH(5)+dieH(2);info();
 </script></body></html>
